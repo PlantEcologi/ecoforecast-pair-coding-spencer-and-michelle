@@ -21,7 +21,7 @@ if(file.exists("03_negexp.R"))        source("03_negexp.R")
 URL = "https://raw.githubusercontent.com/jslingsby/BIO3019S_Ecoforecasting/master/data/modisdata.csv"
 dat <- download.NDVI(URL)
 
-# Convert "calendar_date" to postfire age in days since fire - assuming the first date in the times eries is the time of the fire 
+# Convert "calendar_date" to postfire age in days since fire - assuming the first date in the time series is the time of the fire 
 dat$age <- (as.numeric(dat$calendar_date) - min(as.numeric(dat$calendar_date), na.rm = T))/365.25
 
 ## Plot overall NDVI time series
@@ -32,7 +32,7 @@ plot.NDVI(dat)
 
 Q1: This plot suggests that Fynbos greenness (NDVI) as observed from satellite saturates with time since fire. Why do you think it saturates rather than increasing linearly with time?
 
->*Answer 1:*
+>*Answer 1:* Fynbos NDVI may have saturated with time since recovery may have been much faster in the first few years post-fire. This more rapid recovery in the earlier years may be due to the colonisation of annual plants such as shrubs and herbs. NDVI continues to improve over time but at an increasingly gradual rate.
 
 <br>
 
@@ -99,7 +99,7 @@ Lots more parameters...
 
 Q2: How do the estimates for the common parameters compare?
 
->*Answer 2:*
+>*Answer 2:* The estimates for the common parameters are different between the two models. The simpler model reflects a lower gamma value, but higher alpha and lambda values. However, the differences are not particularly substantial and are all less than 0.045.
 
 <br>
 
@@ -117,11 +117,11 @@ anova(fit_negexp, fit_negexpS)
 
 Q3: Which model is better?
 
->*Answer 3:*
+>*Answer 3:* According to the ANOVA, Model 2 (the full model) is better. It has a significantly lower residual sum of squares (0.45) when compared to Model 1 (0.72), and this means that Model 2 is better able to capture the data.
 
 Q4: How many degrees of freedom are there in this ANOVA and why (i.e. what are they)?
 
->*Answer 4:*
+>*Answer 4:* There are two degrees of freedom in this ANOVA. The degrees of freedom indicates the difference in the number of parameters between the two models. In this case, Model 2 has two more parameters than Model 1. These two parameters are A and phi.
 
 <br>
 
@@ -204,7 +204,7 @@ AIC_full
 
 <br>
 
-When comparing models, the lower the AIC the better, and in general a difference in AIC of 3 or more is analagous to the models being significantly different at an $\alpha$ of $p < 0.05$.
+When comparing models, the lower the AIC the better, and in general a difference in AIC of 3 or more is analogous to the models being significantly different at an $\alpha$ of $p < 0.05$.
 
 ```{r}
 AIC_simple - AIC_full
@@ -214,7 +214,7 @@ AIC_simple - AIC_full
 
 Q5: Is there a preferred model and if so, which one?
 
->*Answer 5:*
+>*Answer 5:* Yes, there is a preferred model. Model 2 (the full model) is preferred as it has a significantly lower AIC value (451 155) than Model 1 (718 113). There is a great difference in their AICs (266 957) which means that the two models are significantly different.
 
 <br>
 
@@ -232,6 +232,6 @@ You'll notice that these are completely different to the AICs for the MLE models
 
 Q6: Why is it not okay to compare the AIC of these NLS models with the AIC of the MLE models? Hint: type `?AIC` into the R console and do some reading.
 
->*Answer 6:*
+>*Answer 6:* AIC theory dictates that log-likelihood should be maximised. Although AIC can be determined for models that are not fitted by maximun likelihood, such as the NLS models, their AICs should not be compared with one another.
 
 <br>
